@@ -1,0 +1,63 @@
+npm install -D jest jest-preset-angular @types/jest
+
+npm uninstall karma karma-chrome-launcher karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter @types/jasmine @types/jasminewd2 jasmine-core jasmine-spec-reporter
+
+tsconfig.spect.json
+
+"types": [
+"jest", //cambiar esta línea de jasmine a jest
+
+"experimentalDecorators": true, // agregar
+"emitDecoratorMetadata": true, // agregar
+
+"files": [ // eliminar la referencia a test.ts ya que lo eliminamos
+
+borrar esto del angular.json
+
+"test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+
+crear setupJest.ts en la raíz
+
+meter import 'jest-preset-angular/setup-jest';
+
+Agregar esto a package.json
+
+"jest": {
+        "preset": "jest-preset-angular",
+        "roots": [
+            "<rootDir>/src"
+        ],
+        "setupFilesAfterEnv": [
+            "<rootDir>/setupJest.ts"
+        ],
+        "testPathIgnorePatterns": [
+            "<rootDir>/node_modules/",
+            "<rootDir>/dist/",
+            "<rootDir>/src/test.ts"
+        ],
+        "globals": {
+            "ts-jest": {
+                "tsConfig": "<rootDir>/tsconfig.spec.json",
+                "stringifyContentPathRegex": "\\.html$"
+            }
+        }
+    }
+
+
+"test": "jest",
